@@ -8,6 +8,16 @@ RSpec.describe "Admin::V1::Categories as :admin", type: :request do
     let!(:categories) { create_list(:category, 5) }
 
     before(:each) { get url, headers: auth_header(user) }
+
+    include_examples 'forbidden access'
+  end
+
+  context 'GET /categories/:id' do
+    let!(:category) { create(:category) }
+    let(:url) { "/admin/v1/categories/#{category.id}" }
+
+    before(:each) { get url, headers: auth_header(user) }
+
     include_examples 'forbidden access'
   end
 
